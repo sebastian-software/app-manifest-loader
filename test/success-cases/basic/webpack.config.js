@@ -1,13 +1,13 @@
 module.exports = {
   entry: {
-    main: __dirname + '/index.js'
+    main: `${__dirname}/index.js`
   },
 
   context: __dirname,
 
   output: {
     filename: 'index.js',
-    path: __dirname + '/actual-output'
+    path: `${__dirname}/actual-output`
   },
 
   module: {

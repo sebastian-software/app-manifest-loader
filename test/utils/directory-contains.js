@@ -3,16 +3,14 @@ var steed = require('steed');
 var fs = require('fs');
 var path = require('path');
 
-var readFile = function(path, done) {
-  return fs.readFile(path, 'utf8', done);
-};
+var readFile = (path, done) => fs.readFile(path, 'utf8', done);
 
-module.exports = function(referenceDir, targetDir, done) {
-  var compareFile = function(file, done) {
+module.exports = (referenceDir, targetDir, done) => {
+  var compareFile = (file, done) => {
     var referenceFile = path.join(referenceDir, file);
     var targetFile = path.join(targetDir, file);
 
-    steed.map([referenceFile, targetFile], readFile, function(err, results) {
+    steed.map([referenceFile, targetFile], readFile, (err, results) => {
       if (err) {
         return done(err);
       }
@@ -21,21 +19,19 @@ module.exports = function(referenceDir, targetDir, done) {
     });
   };
 
-  glob('**/*', { cwd: referenceDir, nodir: true }, function(err, files) {
+  glob('**/*', { cwd: referenceDir, nodir: true }, (err, files) => {
     if (err) {
       return done(err);
     }
 
-    steed.map(files, compareFile, function(err, results) {
+    steed.map(files, compareFile, (err, results) => {
       if (err) {
         return done(err);
       }
 
       done(
         null,
-        !results.some(function(result) {
-          return !result;
-        })
+        !results.some(result => !result)
       );
     });
   });
