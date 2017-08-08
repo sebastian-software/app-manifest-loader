@@ -4,7 +4,9 @@ var steed = require('steed');
 
 function resolveImageSrc(loaderContext, image, callback) {
   if (typeof image.src !== 'string') {
-    return callback(new Error('Missing image "src" property in Web App Manifest'));
+    return callback(
+      new Error('Missing image "src" property in Web App Manifest')
+    );
   }
 
   var dirname = path.dirname(loaderContext.resourcePath);
@@ -57,14 +59,17 @@ module.exports = function(source) {
     return callback(new Error('Invalid JSON in Web App Manifest'));
   }
 
-  steed.parallel([
-    resolveImages.bind(null, loaderContext, manifest, 'splash_screens'),
-    resolveImages.bind(null, loaderContext, manifest, 'icons')
-  ], err => {
-    if (err) {
-      return callback(err);
-    }
+  steed.parallel(
+    [
+      resolveImages.bind(null, loaderContext, manifest, 'splash_screens'),
+      resolveImages.bind(null, loaderContext, manifest, 'icons')
+    ],
+    err => {
+      if (err) {
+        return callback(err);
+      }
 
-    callback(null, JSON.stringify(manifest, null, 2));
-  });
+      callback(null, JSON.stringify(manifest, null, 2));
+    }
+  );
 };

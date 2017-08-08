@@ -31,7 +31,12 @@ module.exports = function(referenceDir, targetDir, done) {
         return done(err);
       }
 
-      done(null, !results.some(function(result) { return !result; }));
+      done(
+        null,
+        !results.some(function(result) {
+          return !result;
+        })
+      );
     });
   });
 };

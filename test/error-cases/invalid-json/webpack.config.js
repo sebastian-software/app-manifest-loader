@@ -16,13 +16,13 @@ module.exports = {
         test: /manifest.json$/,
         use: [
           {
-            loader: "file-loader",
+            loader: 'file-loader',
             options: {
-              name: "manifest.json"
+              name: 'manifest.json'
             }
           },
           {
-            loader: "../../../index.js"
+            loader: '../../../index.js'
           }
         ]
       }
