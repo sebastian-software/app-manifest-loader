@@ -1,6 +1,16 @@
-[![Build Status](https://img.shields.io/travis/markdalgleish/web-app-manifest-loader/master.svg?style=flat-square)](http://travis-ci.org/markdalgleish/web-app-manifest-loader) [![Coverage Status](https://img.shields.io/coveralls/markdalgleish/web-app-manifest-loader/master.svg?style=flat-square)](https://coveralls.io/r/markdalgleish/web-app-manifest-loader) [![npm](https://img.shields.io/npm/v/web-app-manifest-loader.svg?style=flat-square)](https://www.npmjs.com/package/web-app-manifest-loader)
+# Web App Manifest Loader for Webpack<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Dependencies][deps-img]][deps]
 
-# web-app-manifest-loader
+[sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
+[sponsor]: https://www.sebastian-software.de
+[deps]: https://david-dm.org/sebastian-software/edge-builder
+[deps-img]: https://david-dm.org/sebastian-software/edge-builder.svg
+[npm]: https://www.npmjs.com/package/edge-builder
+[npm-downloads-img]: https://img.shields.io/npm/dm/edge-builder.svg
+[npm-version-img]: https://img.shields.io/npm/v/edge-builder.svg
+[travis-img]: https://img.shields.io/travis/sebastian-software/edge-builder/master.svg?branch=master&label=unix%20build
+[appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/edge-builder/master.svg?label=windows%20build
+[travis]: https://travis-ci.org/sebastian-software/edge-builder
+[appveyor]: https://ci.appveyor.com/project/swernerx/edge-builder/branch/master
 
 Load images referenced in the `icons` and `splash_screens` fields in your [Web App Manifest](http://www.w3.org/TR/appmanifest/) using [webpack](https://github.com/webpack/webpack).
 
@@ -65,6 +75,8 @@ This allows you to provide image paths in the standard webpack format inside you
 }
 ```
 
-## License
+## Copyright
 
-[MIT License](http://markdalgleish.mit-license.org/)
+<img src="https://raw.githubusercontent.com/sebastian-software/readable-code/master/assets/sebastiansoftware.png" alt="Sebastian Software GmbH Logo" width="250" height="200"/>
+
+Copyright 2017<br/>[Sebastian Software GmbH](http://www.sebastian-software.de)

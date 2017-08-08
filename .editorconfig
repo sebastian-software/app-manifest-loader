@@ -1,4 +1,3 @@
-# http://editorconfig.org
 root = true
 
 [*]
@@ -8,10 +7,7 @@ end_of_line = lf
 charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
-
-[*.json]
-insert_final_newline = false
+quote_type = double
 
 [*.md]
-indent_style = space
 trim_trailing_whitespace = false
