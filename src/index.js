@@ -42,9 +42,9 @@ function resolveImages(loaderContext, manifest, key, callback) {
     return callback(null)
   }
 
-  steed.map(manifest[key], resolveImageSrc.bind(null, loaderContext), (err) => {
-    if (err) {
-      return callback(err)
+  return steed.map(manifest[key], resolveImageSrc.bind(null, loaderContext), (resolveError) => {
+    if (resolveError) {
+      return callback(resolveError)
     }
 
     callback(null)
@@ -54,10 +54,11 @@ function resolveImages(loaderContext, manifest, key, callback) {
 export default function(source) {
   var loaderContext = this
   var callback = loaderContext.async()
+  var manifest
 
   try {
-    var manifest = JSON.parse(source)
-  } catch (err) {
+    manifest = JSON.parse(source)
+  } catch (parseError) {
     return callback(new Error("Invalid JSON in Web App Manifest"))
   }
 
@@ -66,9 +67,9 @@ export default function(source) {
       resolveImages.bind(null, loaderContext, manifest, "splash_screens"),
       resolveImages.bind(null, loaderContext, manifest, "icons")
     ],
-    (err) => {
-      if (err) {
-        return callback(err)
+    (resolveError) => {
+      if (resolveError) {
+        return callback(resolveError)
       }
 
       callback(null, JSON.stringify(manifest, null, 2))
