@@ -1,6 +1,6 @@
-var path = require('path');
-var loaderUtils = require('loader-utils');
-var steed = require('steed');
+import path from 'path';
+import loaderUtils from 'loader-utils';
+import steed from 'steed';
 
 function resolveImageSrc(loaderContext, image, callback) {
   if (typeof image.src !== 'string') {
@@ -50,7 +50,7 @@ function resolveImages(loaderContext, manifest, key, callback) {
   });
 }
 
-module.exports = function(source) {
+export default function(source) {
   var loaderContext = this;
   var callback = loaderContext.async();
 
