@@ -1,5 +1,4 @@
 import path from 'path';
-import loaderUtils from 'loader-utils';
 import steed from 'steed';
 
 function resolveImageSrc(loaderContext, image, callback) {
