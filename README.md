@@ -16,21 +16,28 @@ In your webpack config:
 
 ```js
 module: {
-  loaders: [
+  rules: [
     {
       test: /manifest.json$/,
-      loader: 'file-loader?name=manifest.json!web-app-manifest-loader'
+      use: [
+        {
+          loader: 'file-loader'
+        },
+        {
+          loader: 'web-app-manifest-loader'
+        }
+      ]
     }
   ]
 }
 ```
 
-Note that this example also uses [file-loader](https://github.com/webpack/file-loader).
+Note that this example also uses [file-loader](https://github.com/webpack-contrib/file-loader).
 
 Then, require the manifest in your application code:
 
 ```js
-require('./manifest.json');
+import manifest from './manifest.json';
 ```
 
 This allows you to provide image paths in the standard webpack format inside your manifest:

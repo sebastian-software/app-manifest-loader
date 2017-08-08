@@ -35,7 +35,7 @@ describe('Success cases', () => {
             }
 
             expect(result).toBeTruthy()
-            resolve()
+            resolve(result)
           });
         }));
       });
