@@ -3,16 +3,28 @@ module.exports = {
     main: __dirname + '/index.js'
   },
 
+  context: __dirname,
+
   output: {
     filename: 'index.js',
     path: __dirname + '/actual-output'
   },
 
   module: {
-    loaders: [
+    rules: [
       {
         test: /manifest.json$/,
-        loader: 'file?name=manifest.json!../../../index.js'
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "manifest.json"
+            }
+          },
+          {
+            loader: "../../../index.js"
+          }
+        ]
       }
     ]
   }
