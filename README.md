@@ -2,20 +2,20 @@
 
 [sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
 [sponsor]: https://www.sebastian-software.de
-[deps]: https://david-dm.org/sebastian-software/edge-builder
-[deps-img]: https://david-dm.org/sebastian-software/edge-builder.svg
-[npm]: https://www.npmjs.com/package/edge-builder
-[npm-downloads-img]: https://img.shields.io/npm/dm/edge-builder.svg
-[npm-version-img]: https://img.shields.io/npm/v/edge-builder.svg
-[travis-img]: https://img.shields.io/travis/sebastian-software/edge-builder/master.svg?branch=master&label=unix%20build
-[appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/edge-builder/master.svg?label=windows%20build
-[travis]: https://travis-ci.org/sebastian-software/edge-builder
-[appveyor]: https://ci.appveyor.com/project/swernerx/edge-builder/branch/master
+[deps]: https://david-dm.org/sebastian-software/app-manifest-loader
+[deps-img]: https://david-dm.org/sebastian-software/app-manifest-loader.svg
+[npm]: https://www.npmjs.com/package/app-manifest-loader
+[npm-downloads-img]: https://img.shields.io/npm/dm/app-manifest-loader.svg
+[npm-version-img]: https://img.shields.io/npm/v/app-manifest-loader.svg
+[travis-img]: https://img.shields.io/travis/sebastian-software/app-manifest-loader/master.svg?branch=master&label=unix%20build
+[appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/app-manifest-loader/master.svg?label=windows%20build
+[travis]: https://travis-ci.org/sebastian-software/app-manifest-loader
+[appveyor]: https://ci.appveyor.com/project/swernerx/app-manifest-loader/branch/master
 
 Load images referenced in the `icons` and `splash_screens` fields in your [Web App Manifest](http://www.w3.org/TR/appmanifest/) using [webpack](https://github.com/webpack/webpack).
 
 ```bash
-$ npm install --save-dev web-app-manifest-loader
+$ npm install --save-dev app-manifest-loader
 ```
 
 ## Usage
@@ -34,7 +34,7 @@ module: {
           loader: 'file-loader'
         },
         {
-          loader: 'web-app-manifest-loader'
+          loader: 'app-manifest-loader'
         }
       ]
     }

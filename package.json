@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/markdalgleish/web-app-manifest-loader.git"
+    "url": "git+https://github.com/markdalgleish/app-manifest-loader.git"
   },
   "author": {
     "name": "Sebastian Software",
@@ -25,9 +25,9 @@
   "pre-commit": "lint-staged",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/markdalgleish/web-app-manifest-loader/issues"
+    "url": "https://github.com/markdalgleish/app-manifest-loader/issues"
   },
-  "homepage": "https://github.com/markdalgleish/web-app-manifest-loader#readme",
+  "homepage": "https://github.com/markdalgleish/app-manifest-loader#readme",
   "jest": {
     "testRegex": "test/index.js",
     "collectCoverageFrom": [
