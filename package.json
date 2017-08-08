@@ -4,8 +4,7 @@
   "description": "Web app manifest loader for webpack",
   "main": "index.js",
   "scripts": {
-    "test": "istanbul cover _mocha test -- --timeout 20000",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -17,17 +16,19 @@
     "url": "https://github.com/markdalgleish/web-app-manifest-loader/issues"
   },
   "homepage": "https://github.com/markdalgleish/web-app-manifest-loader#readme",
+  "jest": {
+    "testRegex": "test/index.js",
+    "collectCoverageFrom": [ "index.js" ]
+  },
   "dependencies": {
     "loader-utils": "^1.1.0",
     "steed": "^1.1.3"
   },
   "devDependencies": {
-    "chai": "^4.1.1",
-    "coveralls": "^2.13.1",
     "file-loader": "^0.11.2",
     "glob": "^7.1.2",
     "istanbul": "^0.4.5",
-    "mocha": "^3.5.0",
+    "jest": "^20.0.4",
     "prettier": "^1.5.3",
     "rimraf": "^2.6.1",
     "webpack": "^3.5.1"
