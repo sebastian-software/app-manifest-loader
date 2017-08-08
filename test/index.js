@@ -1,3 +1,4 @@
+/* eslint-disable */
 var webpack = require('webpack');
 var clean = require('rimraf');
 var getSubDirsSync = require('./utils/get-sub-dirs-sync');
@@ -21,8 +22,7 @@ describe('Success cases', () => {
 
         webpack(webpackConfig, (err, stats) => new Promise((resolve, reject) => {
           if (err) {
-            reject(err);
-            return;
+            return reject(err);
           }
 
           var caseDir = `${__dirname}/success-cases/${successCase}`;
@@ -31,7 +31,7 @@ describe('Success cases', () => {
 
           directoryContains(expectedDir, actualDir, (err, result) => {
             if (err) {
-              return done(err);
+              return reject(err);
             }
 
             expect(result).toBeTruthy()

@@ -22,7 +22,7 @@ module.exports = {
             }
           },
           {
-            loader: '../../../index.js'
+            loader: '../../../lib/index.cjs.js'
           }
         ]
       },
