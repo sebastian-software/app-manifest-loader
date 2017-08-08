@@ -10,7 +10,7 @@ $ npm install --save-dev web-app-manifest-loader
 
 ## Usage
 
-[Documentation: Using loaders](http://webpack.github.io/docs/using-loaders.html)
+[Documentation: Using loaders](https://webpack.js.org/concepts/loaders/#using-loaders)
 
 In your webpack config:
 
