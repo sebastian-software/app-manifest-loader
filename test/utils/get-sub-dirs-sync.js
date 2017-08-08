@@ -1,3 +1,2 @@
-var glob = require('glob');
-
-module.exports = cwd => glob.sync('*/', { cwd: cwd }).map(subDir => subDir.replace(/\/$/, ''));
+import glob from 'glob';
+export default cwd => glob.sync('*/', { cwd: cwd }).map(subDir => subDir.replace(/\/$/, ''));

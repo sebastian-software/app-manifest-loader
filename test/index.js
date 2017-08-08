@@ -1,8 +1,9 @@
 /* eslint-disable */
-var webpack = require('webpack');
-var clean = require('rimraf');
-var getSubDirsSync = require('./utils/get-sub-dirs-sync');
-var directoryContains = require('./utils/directory-contains');
+import webpack from 'webpack';
+
+import clean from 'rimraf';
+import getSubDirsSync from './utils/get-sub-dirs-sync';
+import directoryContains from './utils/directory-contains';
 
 var successCases = getSubDirsSync(`${__dirname}/success-cases`);
 var errorCases = getSubDirsSync(`${__dirname}/error-cases`);
@@ -18,7 +19,7 @@ describe('Success cases', () => {
       });
 
       test('generates the expected files', () => {
-        var webpackConfig = require(`./success-cases/${successCase}/webpack.config.js`);
+        var webpackConfig = require(`./success-cases/${successCase}/webpack.config.js`).default;
 
         webpack(webpackConfig, (err, stats) => new Promise((resolve, reject) => {
           if (err) {
@@ -51,14 +52,15 @@ describe('Error cases', () => {
       });
 
       test('generates the expected error', () => {
-        var webpackConfig = require(`./error-cases/${errorCase}/webpack.config.js`);
-        var expectedError = require(`./error-cases/${errorCase}/expected-error.js`);
+        var webpackConfig = require(`./error-cases/${errorCase}/webpack.config.js`).default;
+        var expectedError = require(`./error-cases/${errorCase}/expected-error.js`).default;
 
         return new Promise((resolve, reject) => {
           webpack(webpackConfig, (err, stats) => {
             var actualError = stats.compilation.errors[0]
               .toString()
               .split('\n')[0];
+
             expect(actualError.indexOf(expectedError)).not.toBe(-1);
             resolve(true)
           });

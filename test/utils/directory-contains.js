@@ -1,11 +1,11 @@
-var glob = require('glob');
-var steed = require('steed');
-var fs = require('fs');
-var path = require('path');
+import glob from 'glob';
+import steed from 'steed';
+import fs from 'fs';
+import path from 'path';
 
 var readFile = (path, done) => fs.readFile(path, 'utf8', done);
 
-module.exports = (referenceDir, targetDir, done) => {
+export default (referenceDir, targetDir, done) => {
   var compareFile = (file, done) => {
     var referenceFile = path.join(referenceDir, file);
     var targetFile = path.join(targetDir, file);
