@@ -10,7 +10,7 @@ function resolveImageSrc(loaderContext, image, callback) {
   var dirname = path.dirname(loaderContext.resourcePath);
 
   // Resolve the image filename relative to the manifest file
-  loaderContext.resolve(dirname, image.src, function(err, filename) {
+  loaderContext.resolve(dirname, image.src, (err, filename) => {
     if (err) {
       return callback(err);
     }
@@ -19,7 +19,7 @@ function resolveImageSrc(loaderContext, image, callback) {
     loaderContext.dependency && loaderContext.dependency(filename);
 
     // Asynchronously pass the image through the loader pipeline
-    loaderContext.loadModule(filename, function(err, source, map, module) {
+    loaderContext.loadModule(filename, (err, source, map, module) => {
       if (err) {
         return callback(err);
       }
@@ -38,7 +38,7 @@ function resolveImages(loaderContext, manifest, key, callback) {
     return callback(null);
   }
 
-  steed.map(manifest[key], resolveImageSrc.bind(null, loaderContext), function(err) {
+  steed.map(manifest[key], resolveImageSrc.bind(null, loaderContext), err => {
     if (err) {
       return callback(err);
     }
@@ -60,7 +60,7 @@ module.exports = function(source) {
   steed.parallel([
     resolveImages.bind(null, loaderContext, manifest, 'splash_screens'),
     resolveImages.bind(null, loaderContext, manifest, 'icons')
-  ], function(err) {
+  ], err => {
     if (err) {
       return callback(err);
     }
