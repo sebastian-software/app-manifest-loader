@@ -1,12 +1,15 @@
 {
   "name": "app-manifest-loader",
-  "version": "0.9.0",
+  "version": "0.8.0",
   "description": "Web App Manifest Loader for Webpack",
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
   "scripts": {
     "prepare": "prepublish",
-    "test": "prepublish && jest --coverage"
+    "test": "prepublish && jest --coverage",
+    "release": "git push && release-it --github.release --npm.publish --non-interactive",
+    "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
+    "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major"
   },
   "repository": {
     "type": "git",
