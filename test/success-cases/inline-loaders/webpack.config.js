@@ -6,7 +6,7 @@ export default {
   context: __dirname,
 
   output: {
-    filename: 'index.js',
+    filename: "index.js",
     path: `${__dirname}/actual-output`
   },
 
@@ -16,16 +16,16 @@ export default {
         test: /manifest.json$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: 'manifest.json'
+              name: "manifest.json"
             }
           },
           {
-            loader: '../../../lib/index.cjs.js'
+            loader: "../../../lib/index.cjs.js"
           }
         ]
       }
     ]
   }
-};
+}
