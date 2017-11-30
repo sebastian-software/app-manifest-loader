@@ -18,7 +18,7 @@
   "author": {
     "name": "Sebastian Software",
     "email": "s.werner@sebastian-software.de",
-    "url": "sebastian-software.de"
+    "url": "https://www.sebastian-software.de"
   },
   "engines": {
     "node": ">=6.0.0",
@@ -42,12 +42,12 @@
   },
   "devDependencies": {
     "babel-preset-edge": "^1.4.0",
+    "eslint-config-readable": "^0.1.2",
     "file-loader": "^1.1.5",
     "glob": "^7.1.2",
     "jest": "^21.2.1",
     "prepublish": "^1.5.4",
     "prettier": "^1.8.2",
-    "readable-code": "^3.4.15",
     "rimraf": "^2.6.2",
     "webpack": "^3.9.1"
   }
