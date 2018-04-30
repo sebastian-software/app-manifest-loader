@@ -37,13 +37,15 @@
   "jest": {
     "testRegex": "test/index.js",
     "collectCoverageFrom": [
-      "index.js"
+      "src/index.js"
     ]
   },
   "dependencies": {
     "steed": "^1.1.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta.46",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-preset-edge": "^3.0.2",
     "eslint-config-readable": "^1.11.1",
     "file-loader": "^1.1.11",

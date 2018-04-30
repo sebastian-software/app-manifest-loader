@@ -31,10 +31,10 @@ module: {
       test: /manifest.json$/,
       use: [
         {
-          loader: 'file-loader'
+          loader: "file-loader"
         },
         {
-          loader: 'app-manifest-loader'
+          loader: "app-manifest-loader"
         }
       ]
     }
@@ -47,7 +47,7 @@ Note that this example also uses [file-loader](https://github.com/webpack-contri
 Then, require the manifest in your application code:
 
 ```js
-import manifest from './manifest.json';
+import manifest from "./manifest.json";
 ```
 
 This allows you to provide image paths in the standard webpack format inside your manifest:
@@ -77,6 +77,6 @@ This allows you to provide image paths in the standard webpack format inside you
 
 ## Copyright
 
-<img src="https://raw.githubusercontent.com/sebastian-software/readable-code/master/assets/sebastiansoftware.png" alt="Sebastian Software GmbH Logo" width="250" height="200"/>
+<img src="https://cdn.rawgit.com/sebastian-software/sebastian-software-brand/3d93746f/sebastiansoftware-en.svg" alt="Sebastian Software GmbH Logo" width="250" height="200"/>
 
-Copyright 2017<br/>[Sebastian Software GmbH](http://www.sebastian-software.de)
+Copyright 2017-2018<br/>[Sebastian Software GmbH](http://www.sebastian-software.de)
