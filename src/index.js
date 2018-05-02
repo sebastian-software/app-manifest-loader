@@ -1,7 +1,7 @@
 /* eslint-disable max-params */
 
-import path from "path"
 import steed from "steed"
+import loaderUtils from "loader-utils"
 
 function resolveImageSrc(loaderContext, image, callback) {
   if (typeof image.src !== "string") {
@@ -10,27 +10,31 @@ function resolveImageSrc(loaderContext, image, callback) {
     )
   }
 
-  var publicPath = loaderContext.options.output.publicPath || ""
-  var dirname = path.dirname(loaderContext.resourcePath)
 
-  // Resolve the image filename relative to the manifest file
-  loaderContext.resolve(dirname, image.src, (err, filename) => {
+  const context = loaderContext.context
+  const request = loaderUtils.urlToRequest(image.src)
+
+  console.log("Request:", request)
+
+  loaderContext.resolve(context, request, function (err, filename) {
     if (err) {
       return callback(err)
     }
 
-    // Ensure Webpack knows that the image is a dependency of the manifest
-    loaderContext.dependency && loaderContext.dependency(filename)
+    console.log("Filename:", filename)
 
-    // Asynchronously pass the image through the loader pipeline
-    loaderContext.loadModule(filename, (err, source, map, module) => {
+    loaderContext.addDependency(filename)
+
+    loaderContext.loadModule(filename, function (err, source, map, module) {
       if (err) {
         return callback(err)
       }
 
-      // Update the image src property to match the generated filename
-      // Is it always the first key in the assets object?
-      image.src = publicPath + Object.keys(module.assets)[0]
+      console.log("Full Filename:", filename)
+      console.log("New Source:", source)
+
+      // How to update the source here in our JSON?
+      // image.src = ???
 
       callback(null)
     })
@@ -51,28 +55,37 @@ function resolveImages(loaderContext, manifest, key, callback) {
   })
 }
 
-export default function(source) {
-  var loaderContext = this
-  var callback = loaderContext.async()
+export default function (content, map, meta) {
+  if (this.cacheable) {
+    this.cacheable();
+  }
+
+  const options = loaderUtils.getOptions(this)
+
+  var callback = this.async()
   var manifest
 
   try {
-    manifest = JSON.parse(source)
+    manifest = JSON.parse(content)
   } catch (parseError) {
     return callback(new Error("Invalid JSON in Web App Manifest"))
   }
 
   steed.parallel(
     [
-      resolveImages.bind(null, loaderContext, manifest, "splash_screens"),
-      resolveImages.bind(null, loaderContext, manifest, "icons")
+      resolveImages.bind(null, this, manifest, "splash_screens"),
+      resolveImages.bind(null, this, manifest, "icons")
     ],
     (resolveError) => {
       if (resolveError) {
         return callback(resolveError)
       }
 
-      callback(null, JSON.stringify(manifest, null, 2))
+      console.log("Result:", manifest)
+      var formatted = JSON.stringify(manifest, null, 2)
+      console.log("Formatted:", formatted)
+
+      callback(null, formatted)
     }
   )
 }
