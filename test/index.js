@@ -19,10 +19,12 @@ describe("Success cases", () => {
         var webpackConfig = require(`./success-cases/${successCase}/webpack.config.js`)
           .default
 
-        webpack(
-          webpackConfig,
-          (err, stats) =>
-            new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
+
+          return webpack(
+            webpackConfig,
+            (err, stats) => {
+
               if (err) {
                 return reject(err)
               }
@@ -39,8 +41,12 @@ describe("Success cases", () => {
                 expect(result).toBeTruthy()
                 resolve(result)
               })
-            })
-        )
+            }
+
+
+          )
+        })
+
       })
     })
   })
@@ -64,6 +70,8 @@ describe("Error cases", () => {
             var actualError = stats.compilation.errors[0]
               .toString()
               .split("\n")[0]
+
+            console.log("ACTUAL ERROR:", actualError)
 
             expect(actualError.indexOf(expectedError)).not.toBe(-1)
             resolve(true)

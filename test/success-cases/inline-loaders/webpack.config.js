@@ -1,9 +1,10 @@
-export default {
+module.exports = {
   entry: {
     main: `${__dirname}/index.js`
   },
 
   context: __dirname,
+  mode: "development",
 
   output: {
     filename: "index.js",
@@ -16,10 +17,7 @@ export default {
         test: /manifest.json$/,
         use: [
           {
-            loader: "file-loader",
-            options: {
-              name: "manifest.json"
-            }
+            loader: "file-loader"
           },
           {
             loader: "../../../lib/index.cjs.js"
