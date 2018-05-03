@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "prepack": "preppy",
-    "test": "preppy && jest --coverage",
+    "test": "preppy && jest",
     "release": "git push && release-it --github.release --npm.publish --non-interactive",
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major"
