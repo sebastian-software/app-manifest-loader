@@ -1,6 +1,6 @@
 {
   "name": "app-manifest-loader",
-  "version": "0.9.3",
+  "version": "1.0.0",
   "description": "Web App Manifest Loader for Webpack",
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.js",
