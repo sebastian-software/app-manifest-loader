@@ -9,9 +9,9 @@ var successCases = getSubDirsSync(`${__dirname}/success-cases`)
 var errorCases = getSubDirsSync(`${__dirname}/error-cases`)
 
 describe("Success cases", () => {
-  successCases.forEach(successCase => {
+  successCases.forEach((successCase) => {
     describe(successCase, () => {
-      beforeEach(done => {
+      beforeEach((done) => {
         clean(`${__dirname}/success-cases/${successCase}/actual-output`, done)
       })
 
@@ -19,42 +19,34 @@ describe("Success cases", () => {
         var webpackConfig = require(`./success-cases/${successCase}/webpack.config.js`)
 
         return new Promise((resolve, reject) => {
+          return webpack(webpackConfig, (err, stats) => {
+            if (err) {
+              return reject(err)
+            }
 
-          return webpack(
-            webpackConfig,
-            (err, stats) => {
+            var caseDir = `${__dirname}/success-cases/${successCase}`
+            var expectedDir = `${caseDir}/expected-output/`
+            var actualDir = `${caseDir}/actual-output/`
 
+            directoryContains(expectedDir, actualDir, (err, result) => {
               if (err) {
                 return reject(err)
               }
 
-              var caseDir = `${__dirname}/success-cases/${successCase}`
-              var expectedDir = `${caseDir}/expected-output/`
-              var actualDir = `${caseDir}/actual-output/`
-
-              directoryContains(expectedDir, actualDir, (err, result) => {
-                if (err) {
-                  return reject(err)
-                }
-
-                expect(result).toBeTruthy()
-                resolve(result)
-              })
-            }
-
-
-          )
+              expect(result).toBeTruthy()
+              resolve(result)
+            })
+          })
         })
-
       })
     })
   })
 })
 
 describe("Error cases", () => {
-  errorCases.forEach(errorCase => {
+  errorCases.forEach((errorCase) => {
     describe(errorCase, () => {
-      beforeEach(done => {
+      beforeEach((done) => {
         clean(`${__dirname}/error-cases/${errorCase}/actual-output`, done)
       })
 
@@ -66,9 +58,7 @@ describe("Error cases", () => {
 
         return new Promise((resolve, reject) => {
           webpack(webpackConfig, (err, stats) => {
-            var actualError = stats.compilation.errors[0]
-              .toString()
-              .split("\n")[0]
+            var actualError = stats.compilation.errors[0].toString().split("\n")[0]
 
             expect(actualError.indexOf(expectedError)).not.toBe(-1)
             resolve(true)

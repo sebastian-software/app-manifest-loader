@@ -25,9 +25,16 @@ function resolveImageSrc(image, options) {
           return reject(err)
         }
 
-        const publicPath = options.publicPath ? loaderUtils.interpolateName(this, options.publicPath, { content: source }) : ""
-        const assignmentWithPublicPath = source.replace(PUBLIC_MARKER, JSON.stringify(publicPath))
-        const getPublicSource = new Function(`var module={};return ${assignmentWithPublicPath}`)
+        const publicPath = options.publicPath ?
+          loaderUtils.interpolateName(this, options.publicPath, { content: source }) :
+          ""
+        const assignmentWithPublicPath = source.replace(
+          PUBLIC_MARKER,
+          JSON.stringify(publicPath)
+        )
+        const getPublicSource = new Function(
+          `var module={};return ${assignmentWithPublicPath}`
+        )
 
         image.src = getPublicSource()
         resolve()
@@ -44,15 +51,16 @@ function resolveImages(entries, options) {
   return Promise.all(entries.map((entry) => resolveImageSrc.call(this, entry, options)))
 }
 
-export default function (content, map, meta) {
+export default function(content, map, meta) {
   if (this.cacheable) {
-    this.cacheable();
+    this.cacheable()
   }
 
   const options = loaderUtils.getOptions(this) || {}
   const callback = this.async()
 
-  const context = options.context || this.rootContext || (this.options && this.options.context)
+  const context =
+    options.context || this.rootContext || (this.options && this.options.context)
 
   try {
     var manifest = JSON.parse(content)
@@ -63,10 +71,12 @@ export default function (content, map, meta) {
   Promise.all([
     resolveImages.call(this, manifest.splash_screens, options),
     resolveImages.call(this, manifest.icons, options)
-  ]).then(() => {
-    var formatted = JSON.stringify(manifest, null, 2)
-    callback(null, formatted)
-  }).catch((resolveError) => {
-    callback(resolveError)
-  })
+  ])
+    .then(() => {
+      const formatted = JSON.stringify(manifest, null, 2)
+      callback(null, formatted)
+    })
+    .catch((resolveError) => {
+      callback(resolveError)
+    })
 }

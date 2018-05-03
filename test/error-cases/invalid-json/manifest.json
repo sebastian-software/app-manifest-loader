@@ -1,5 +1,5 @@
 {
   this_isnt: function() {
-    return 'valid JSON';
+    return "valid JSON"
   }
 }

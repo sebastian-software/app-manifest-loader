@@ -3,12 +3,12 @@ import steed from "steed"
 import fs from "fs"
 import path from "path"
 
-var readFile = (path, done) => fs.readFile(path, "utf8", done)
+const readFile = (path, done) => fs.readFile(path, "utf8", done)
 
 export default (referenceDir, targetDir, done) => {
-  var compareFile = (file, done) => {
-    var referenceFile = path.join(referenceDir, file)
-    var targetFile = path.join(targetDir, file)
+  const compareFile = (file, done) => {
+    const referenceFile = path.join(referenceDir, file)
+    const targetFile = path.join(targetDir, file)
 
     steed.map([ referenceFile, targetFile ], readFile, (err, results) => {
       if (err) {
