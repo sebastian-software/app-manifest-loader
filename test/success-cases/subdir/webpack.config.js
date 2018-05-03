@@ -26,7 +26,7 @@ module.exports = {
             }
           },
           {
-            loader: "../../../lib/index.cjs.js",
+            loader: "../../../",
             options: {
               publicPath: "http://cdn.example.com/assets/"
             }

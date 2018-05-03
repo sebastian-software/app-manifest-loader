@@ -20,7 +20,7 @@ export default {
             loader: "file-loader"
           },
           {
-            loader: "../../../lib/index.cjs.js"
+            loader: "../../../"
           }
         ]
       }

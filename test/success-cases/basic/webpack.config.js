@@ -25,7 +25,7 @@ module.exports = {
             }
           },
           {
-            loader: "../../../lib/index.cjs.js"
+            loader: "../../../"
           }
         ]
       },

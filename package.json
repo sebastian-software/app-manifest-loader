@@ -7,8 +7,8 @@
     "lib/"
   ],
   "scripts": {
-    "prepack": "preppy",
-    "test": "preppy && jest",
+    "prepack": "rimraf lib && preppy",
+    "test": "npm run prepack && jest",
     "release": "git push && release-it --github.release --npm.publish --non-interactive",
     "release:minor": "git push && release-it --github.release --npm.publish --non-interactive --increment minor",
     "release:major": "git push && release-it --github.release --npm.publish --non-interactive --increment major"
