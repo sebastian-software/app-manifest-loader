@@ -70,8 +70,6 @@ describe("Error cases", () => {
               .toString()
               .split("\n")[0]
 
-            console.log("ACTUAL ERROR:", actualError)
-
             expect(actualError.indexOf(expectedError)).not.toBe(-1)
             resolve(true)
           })
