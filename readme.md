@@ -18,11 +18,19 @@ Load images referenced in the `icons` and `splash_screens` fields in your [Web A
 $ npm install --save-dev app-manifest-loader
 ```
 
+## Web App Manifest
+
+Here you'll find additional documentation on the corresponding standard:
+
+- [Google Developers](https://developers.google.com/web/fundamentals/web-app-manifest/)
+- [Mozilla](https://developer.mozilla.org/en-US/docs/Web/Manifest)
+- [W3C](http://www.w3.org/TR/appmanifest/)
+
 ## Usage
 
 [Documentation: Using loaders](https://webpack.js.org/concepts/loaders/#using-loaders)
 
-In your webpack config:
+In your Webpack config:
 
 ```js
 module: {
@@ -50,7 +58,13 @@ Then, require the manifest in your application code:
 import manifest from "./manifest.json"
 ```
 
-This allows you to provide image paths in the standard webpack format inside your manifest:
+In typical React application you might want to use React Helmet. Then the typical approach is to use the imported URL at the corresponding `link` element:
+
+```html
+<link rel="manifest" href={manifest} />
+```
+
+The manifest allows you to provide image paths in the standard webpack format inside your manifest:
 
 ```js
 {
