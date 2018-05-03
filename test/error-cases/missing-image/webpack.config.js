@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   entry: {
     main: `${__dirname}/index.js`
   },
