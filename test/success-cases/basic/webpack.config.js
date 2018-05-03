@@ -9,15 +9,14 @@ module.exports = {
 
   output: {
     filename: "index.js",
-    path: `${__dirname}/actual-output`,
-    publicPath: 'http://cdn.example.com/assets/[hash]/'
+    path: `${__dirname}/actual-output`
   },
 
   module: {
     rules: [
       {
         test: /manifest.json$/,
-        type: 'javascript/auto',
+        type: "javascript/auto",
         use: [
           {
             loader: "file-loader",
@@ -26,10 +25,7 @@ module.exports = {
             }
           },
           {
-            loader: "../../../lib/index.cjs.js",
-            options: {
-              publicPath: "http://cdn.example.com/assets/[hash]/"
-            }
+            loader: "../../../lib/index.cjs.js"
           }
         ]
       },
@@ -39,7 +35,7 @@ module.exports = {
           {
             loader: "file-loader",
             options: {
-              name: "assets/file-[name].[ext]"
+              name: "file-[name].[ext]"
             }
           }
         ]

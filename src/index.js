@@ -15,17 +15,17 @@ function resolveImageSrc(image, options) {
 
     this.resolve(context, request, (err, filename) => {
       if (err) {
-        throw err
+        return reject(err)
       }
 
       this.addDependency(filename)
 
       this.loadModule(filename, (err, source, map, module) => {
         if (err) {
-          throw err
+          return reject(err)
         }
 
-        const publicPath = loaderUtils.interpolateName(this, options.publicPath || "", { content: source })
+        const publicPath = options.publicPath ? loaderUtils.interpolateName(this, options.publicPath, { content: source }) : ""
         const assignmentWithPublicPath = source.replace(PUBLIC_MARKER, JSON.stringify(publicPath))
         const getPublicSource = new Function(`var module={};return ${assignmentWithPublicPath}`)
 
@@ -63,10 +63,10 @@ export default function (content, map, meta) {
   Promise.all([
     resolveImages.call(this, manifest.splash_screens, options),
     resolveImages.call(this, manifest.icons, options)
-  ]).catch((resolveError) => {
-    callback(resolveError)
-  }).then(() => {
+  ]).then(() => {
     var formatted = JSON.stringify(manifest, null, 2)
     callback(null, formatted)
+  }).catch((resolveError) => {
+    callback(resolveError)
   })
 }
