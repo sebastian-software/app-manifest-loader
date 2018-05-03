@@ -15,9 +15,13 @@ module.exports = {
     rules: [
       {
         test: /manifest.json$/,
+        type: 'javascript/auto',
         use: [
           {
-            loader: "file-loader"
+            loader: "file-loader",
+            options: {
+              name: "file-[name].[ext]"
+            }
           },
           {
             loader: "../../../lib/index.cjs.js"
@@ -30,7 +34,7 @@ module.exports = {
           {
             loader: "file-loader",
             options: {
-              name: "file-[hash:base62:8].[ext]"
+              name: "file-[name].[ext]"
             }
           }
         ]
