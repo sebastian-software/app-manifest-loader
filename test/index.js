@@ -17,7 +17,6 @@ describe("Success cases", () => {
 
       test("generates the expected files", () => {
         var webpackConfig = require(`./success-cases/${successCase}/webpack.config.js`)
-          .default
 
         return new Promise((resolve, reject) => {
 

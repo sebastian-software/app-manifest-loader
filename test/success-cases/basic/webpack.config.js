@@ -5,10 +5,12 @@ module.exports = {
 
   context: __dirname,
   mode: "development",
+  devtool: false,
 
   output: {
     filename: "index.js",
-    path: `${__dirname}/actual-output`
+    path: `${__dirname}/actual-output`,
+    publicPath: 'http://cdn.example.com/assets/[hash]/'
   },
 
   module: {
@@ -24,7 +26,10 @@ module.exports = {
             }
           },
           {
-            loader: "../../../lib/index.cjs.js"
+            loader: "../../../lib/index.cjs.js",
+            options: {
+              publicPath: "http://cdn.example.com/assets/[hash]/"
+            }
           }
         ]
       },
@@ -34,7 +39,7 @@ module.exports = {
           {
             loader: "file-loader",
             options: {
-              name: "file-[name].[ext]"
+              name: "assets/file-[name].[ext]"
             }
           }
         ]

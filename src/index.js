@@ -1,58 +1,47 @@
-/* eslint-disable max-params */
-
-import steed from "steed"
 import loaderUtils from "loader-utils"
 
-function resolveImageSrc(loaderContext, image, callback) {
+const PUBLIC_MARKER = "__webpack_public_path__"
+
+function resolveImageSrc(image, options) {
   if (typeof image.src !== "string") {
-    return callback(
-      new Error('Missing image "src" property in Web App Manifest')
-    )
+    throw new Error('Missing image "src" property in Web App Manifest')
   }
 
+  return new Promise((resolve, reject) => {
+    const context = this.context
+    const request = loaderUtils.urlToRequest(image.src)
 
-  const context = loaderContext.context
-  const request = loaderUtils.urlToRequest(image.src)
+    const requestStr = loaderUtils.stringifyRequest(this, request)
 
-  console.log("Request:", request)
-
-  loaderContext.resolve(context, request, function (err, filename) {
-    if (err) {
-      return callback(err)
-    }
-
-    console.log("Filename:", filename)
-
-    loaderContext.addDependency(filename)
-
-    loaderContext.loadModule(filename, function (err, source, map, module) {
+    this.resolve(context, request, (err, filename) => {
       if (err) {
-        return callback(err)
+        throw err
       }
 
-      console.log("Full Filename:", filename)
-      console.log("New Source:", source)
+      this.addDependency(filename)
 
-      // How to update the source here in our JSON?
-      // image.src = ???
+      this.loadModule(filename, (err, source, map, module) => {
+        if (err) {
+          throw err
+        }
 
-      callback(null)
+        const publicPath = loaderUtils.interpolateName(this, options.publicPath || "", { content: source })
+        const assignmentWithPublicPath = source.replace(PUBLIC_MARKER, JSON.stringify(publicPath))
+        const getPublicSource = new Function(`var module={};return ${assignmentWithPublicPath}`)
+
+        image.src = getPublicSource()
+        resolve()
+      })
     })
   })
 }
 
-function resolveImages(loaderContext, manifest, key, callback) {
-  if (!Array.isArray(manifest[key])) {
-    return callback(null)
+function resolveImages(entries, options) {
+  if (!Array.isArray(entries)) {
+    return Promise.resolve()
   }
 
-  return steed.map(manifest[key], resolveImageSrc.bind(null, loaderContext), (resolveError) => {
-    if (resolveError) {
-      return callback(resolveError)
-    }
-
-    callback(null)
-  })
+  return Promise.all(entries.map((entry) => resolveImageSrc.call(this, entry, options)))
 }
 
 export default function (content, map, meta) {
@@ -60,32 +49,24 @@ export default function (content, map, meta) {
     this.cacheable();
   }
 
-  const options = loaderUtils.getOptions(this)
+  const options = loaderUtils.getOptions(this) || {}
+  const callback = this.async()
 
-  var callback = this.async()
-  var manifest
+  const context = options.context || this.rootContext || (this.options && this.options.context)
 
   try {
-    manifest = JSON.parse(content)
+    var manifest = JSON.parse(content)
   } catch (parseError) {
     return callback(new Error("Invalid JSON in Web App Manifest"))
   }
 
-  steed.parallel(
-    [
-      resolveImages.bind(null, this, manifest, "splash_screens"),
-      resolveImages.bind(null, this, manifest, "icons")
-    ],
-    (resolveError) => {
-      if (resolveError) {
-        return callback(resolveError)
-      }
-
-      console.log("Result:", manifest)
-      var formatted = JSON.stringify(manifest, null, 2)
-      console.log("Formatted:", formatted)
-
-      callback(null, formatted)
-    }
-  )
+  Promise.all([
+    resolveImages.call(this, manifest.splash_screens, options),
+    resolveImages.call(this, manifest.icons, options)
+  ]).catch((resolveError) => {
+    callback(resolveError)
+  }).then(() => {
+    var formatted = JSON.stringify(manifest, null, 2)
+    callback(null, formatted)
+  })
 }
