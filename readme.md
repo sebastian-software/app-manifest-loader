@@ -89,6 +89,17 @@ The manifest allows you to provide image paths in the standard webpack format in
 }
 ```
 
+## Alternatives
+
+We chose to implement this as a loader to be able to import hand written and optimized manifests with their matching images.
+
+An alternative concept would be to generate most of the required image by automatic image scaling by just defining a few master images. In this case you would typically use this well maintained plugin:
+
+- [Webpack PWA Manifest](https://github.com/arthurbergmz/webpack-pwa-manifest)
+
+Compared to the loader based solution this moves application specific data into the Webpack configuration. One could argue that with shared Webpack configurations this introduces some app specific sections in such a tooling related file.
+
+
 ## Copyright
 
 <img src="https://cdn.rawgit.com/sebastian-software/sebastian-software-brand/3d93746f/sebastiansoftware-en.svg" alt="Sebastian Software GmbH Logo" width="250" height="200"/>
