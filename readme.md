@@ -47,7 +47,7 @@ Note that this example also uses [file-loader](https://github.com/webpack-contri
 Then, require the manifest in your application code:
 
 ```js
-import manifest from "./manifest.json";
+import manifest from "./manifest.json"
 ```
 
 This allows you to provide image paths in the standard webpack format inside your manifest:
