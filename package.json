@@ -1,6 +1,6 @@
 {
   "name": "app-manifest-loader",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Web App Manifest Loader for Webpack - See also: https://developer.mozilla.org/en-US/docs/Web/Manifest",
   "main": "lib/app-manifest-loader.js",
   "files": [
