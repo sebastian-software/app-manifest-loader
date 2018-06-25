@@ -58,7 +58,7 @@ describe("Error cases", () => {
 
         return new Promise((resolve, reject) => {
           webpack(webpackConfig, (err, stats) => {
-            var actualError = stats.compilation.errors[0].toString().split("\n")[0]
+            var actualError = stats.compilation.errors.join("\n")
 
             expect(actualError.indexOf(expectedError)).not.toBe(-1)
             resolve(true)
