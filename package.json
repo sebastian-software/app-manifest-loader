@@ -55,5 +55,8 @@
     "steed": "^1.1.3",
     "webpack": "^4.12.2",
     "webpack-cli": "^3.0.8"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.0.0-beta.51"
   }
 }
