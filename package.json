@@ -31,6 +31,7 @@
   "license": "MIT",
   "homepage": "https://github.com/sebastian-software/app-manifest-loader",
   "jest": {
+    "testEnvironment": "node",
     "testRegex": "test/index.js"
   },
   "peerDependencies": {
