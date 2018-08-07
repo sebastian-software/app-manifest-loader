@@ -60,6 +60,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0-beta.56",
-    "core-js": "^2.5.7"
+    "core-js": "^2.5.7",
+    "loader-utils": "^1.1.0"
   }
 }
