@@ -34,7 +34,7 @@ describe("Success cases", () => {
               }
 
               expect(result).toBeTruthy()
-              resolve(result)
+              setTimeout(() => resolve(result), 500)
             })
           })
         })
@@ -61,7 +61,7 @@ describe("Error cases", () => {
             var actualError = stats.compilation.errors.join("\n")
 
             expect(actualError.indexOf(expectedError)).not.toBe(-1)
-            resolve(true)
+            setTimeout(() => resolve(true), 500)
           })
         })
       })
