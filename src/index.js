@@ -20,9 +20,10 @@ function resolveImageSrc(image, options) {
 
       this.addDependency(filename)
 
-      this.loadModule(filename, (err, source, map, module) => {
-        if (err) {
-          return reject(err)
+      /* eslint-disable max-params */
+      this.loadModule(filename, (error, source, map, module) => {
+        if (error) {
+          return reject(error)
         }
 
         const publicPath = options.publicPath ?
@@ -32,6 +33,8 @@ function resolveImageSrc(image, options) {
           PUBLIC_MARKER,
           JSON.stringify(publicPath)
         )
+
+        /* eslint-disable no-new-func */
         const getPublicSource = new Function(
           `var module={};return ${assignmentWithPublicPath}`
         )
