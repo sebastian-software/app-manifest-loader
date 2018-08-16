@@ -18,6 +18,9 @@ Loader to deal with modern PWA/SPA manifest files:
 - [Web Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest): Chrome 39+
 - [Browserconfig](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/dn320426\(v=vs.85\)): IE11+, Windows 8+
 
+Easy to use. Two formats, one loader. Ready for Webpack v4. Enjoy.
+
+
 ```bash
 $ npm install --save-dev app-manifest-loader
 ```
