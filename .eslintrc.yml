@@ -1,0 +1,4 @@
+extends:
+  - readable
+globals:
+  __dirname: true
