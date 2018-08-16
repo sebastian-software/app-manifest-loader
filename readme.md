@@ -27,7 +27,7 @@ $ npm install --save-dev app-manifest-loader
 
 ## Web App Manifest
 
-Re-References all images declared in the `icons` and `splash_screens` fields.
+Re-References all images declared in the `icons` and `screenshots` fields.
 
 Here you'll find additional documentation on the corresponding standard:
 
@@ -105,9 +105,9 @@ The manifest allows you to provide image paths in the standard Webpack format in
 {
   "name": "Hello World",
   ...
-  "splash_screens": [
+  "screenshots": [
     {
-      "src": "./images/splash-hi.png",
+      "src": "./images/screenshot-portrait.png",
       "sizes": "2560x1440",
       "type": "image/png"
     },
@@ -115,8 +115,8 @@ The manifest allows you to provide image paths in the standard Webpack format in
   ],
   "icons": [
     {
-      "src": "./images/icon-hi.png",
-      "sizes": "512x512",
+      "src": "./images/screenshot-landscape.png",
+      "sizes": "1440x2560",
       "type": "image/png"
     },
     ...
