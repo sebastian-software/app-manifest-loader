@@ -65,7 +65,7 @@ function findElements(xmlElement, expectedName) {
   return xmlElement.elements.filter(({ name }) => name === expectedName)
 }
 
-export default function(content, map, meta) {
+export default async function(content, map, meta) {
   if (this.cacheable) {
     this.cacheable()
   }
@@ -80,22 +80,27 @@ export default function(content, map, meta) {
     try {
       manifest = JSON.parse(content)
     } catch (parseError) {
-      return callback(new Error(`Invalid JSON in Web App Manifest: ${  this.resourcePath}`))
+      return callback(new Error(`Invalid JSON in Web App Manifest: ${this.resourcePath}`))
     }
 
-    return Promise.all([
-      resolveImages.call(this, manifest.splash_screens, options),
-      resolveImages.call(this, manifest.icons, options)
-    ])
-      .then(() => {
-        const formatted = JSON.stringify(manifest, null, 2)
-        callback(null, formatted)
-      })
-      .catch((resolveError) => {
-        callback(resolveError)
-      })
+    try {
+      await Promise.all([
+        resolveImages.call(this, manifest.splash_screens, options),
+        resolveImages.call(this, manifest.icons, options)
+      ])
+    } catch(resolveError) {
+      return callback(resolveError)
+    }
+
+    const formatted = JSON.stringify(manifest, null, 2)
+    callback(null, formatted)
   } else if (fileExt === ".xml") {
-    const browserconfig = xmljs.xml2js(content)
+    let browserconfig
+    try {
+      browserconfig = xmljs.xml2js(content)
+    } catch (parseError) {
+      return callback(new Error(`Invalid XML in Browserconfig: ${this.resourcePath}`))
+    }
 
     const tiles = findElements(browserconfig, "browserconfig")
       .map((element) => findElements(element, "msapplication"))
@@ -106,17 +111,18 @@ export default function(content, map, meta) {
       .reduce((accumulator, value) => [].concat(accumulator).concat(value), [])
       .filter((element) => element.attributes && element.attributes.src)
 
-    return resolveImages.call(this, tiles, options).then(() => {
-      const formatted = xmljs.js2xml(browserconfig, {
-        spaces: 2,
-        indentAttributes: false,
-      })
-      callback(null, formatted)
-    }).catch((resolveError) => {
-      console.log("ResolveError:",resolveError)
-      callback(resolveError)
+    try {
+      await resolveImages.call(this, tiles, options)
+    } catch(resolveError) {
+      return callback(resolveError)
+    }
+
+    const formatted = xmljs.js2xml(browserconfig, {
+      spaces: 2,
+      indentAttributes: false
     })
+    callback(null, formatted)
   } else {
-    return callback(new Error(`Unsupported manifest file: ${  this.resourcePath}`))
+    callback(new Error(`Unsupported manifest file: ${this.resourcePath}`))
   }
 }
