@@ -15,8 +15,6 @@ function resolveImageSrc(image, options) {
     const context = this.context
     const request = loaderUtils.urlToRequest(src)
 
-    const requestStr = loaderUtils.stringifyRequest(this, request)
-
     this.resolve(context, request, (err, filename) => {
       if (err) {
         return reject(err)
@@ -74,9 +72,6 @@ export default function(content, map, meta) {
 
   const options = loaderUtils.getOptions(this) || {}
   const callback = this.async()
-
-  const context =
-    options.context || this.rootContext || (this.options && this.options.context)
 
   const fileExt = extname(this.resourcePath)
 
