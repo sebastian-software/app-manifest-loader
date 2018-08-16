@@ -1,15 +1,19 @@
+import { extname } from "path"
 import loaderUtils from "loader-utils"
+import xmljs from "xml-js"
 
 const PUBLIC_MARKER = "__webpack_public_path__"
 
 function resolveImageSrc(image, options) {
-  if (typeof image.src !== "string") {
-    throw new Error('Missing image "src" property in Web App Manifest')
+  const hasAttributes = Boolean(image.attributes)
+  const src = hasAttributes ? image.attributes.src : image.src
+  if (typeof src !== "string") {
+    throw new Error('Missing image "src" property for manifest entry.')
   }
 
   return new Promise((resolve, reject) => {
     const context = this.context
-    const request = loaderUtils.urlToRequest(image.src)
+    const request = loaderUtils.urlToRequest(src)
 
     const requestStr = loaderUtils.stringifyRequest(this, request)
 
@@ -21,7 +25,7 @@ function resolveImageSrc(image, options) {
       this.addDependency(filename)
 
       /* eslint-disable max-params */
-      this.loadModule(filename, (error, source, map, module) => {
+      return this.loadModule(filename, (error, source, map, module) => {
         if (error) {
           return reject(error)
         }
@@ -39,8 +43,13 @@ function resolveImageSrc(image, options) {
           `var module={};return ${assignmentWithPublicPath}`
         )
 
-        image.src = getPublicSource()
-        resolve()
+        if (hasAttributes) {
+          image.attributes.src = getPublicSource()
+        } else {
+          image.src = getPublicSource()
+        }
+
+        return resolve()
       })
     })
   })
@@ -54,6 +63,10 @@ function resolveImages(entries, options) {
   return Promise.all(entries.map((entry) => resolveImageSrc.call(this, entry, options)))
 }
 
+function findElements(xmlElement, expectedName) {
+  return xmlElement.elements.filter(({ name }) => name === expectedName)
+}
+
 export default function(content, map, meta) {
   if (this.cacheable) {
     this.cacheable()
@@ -65,22 +78,50 @@ export default function(content, map, meta) {
   const context =
     options.context || this.rootContext || (this.options && this.options.context)
 
-  let manifest
-  try {
-    manifest = JSON.parse(content)
-  } catch (parseError) {
-    return callback(new Error("Invalid JSON in Web App Manifest"))
-  }
+  const fileExt = extname(this.resourcePath)
 
-  return Promise.all([
-    resolveImages.call(this, manifest.splash_screens, options),
-    resolveImages.call(this, manifest.icons, options)
-  ])
-    .then(() => {
-      const formatted = JSON.stringify(manifest, null, 2)
+  if (fileExt === ".json") {
+    let manifest
+    try {
+      manifest = JSON.parse(content)
+    } catch (parseError) {
+      return callback(new Error(`Invalid JSON in Web App Manifest: ${  this.resourcePath}`))
+    }
+
+    return Promise.all([
+      resolveImages.call(this, manifest.splash_screens, options),
+      resolveImages.call(this, manifest.icons, options)
+    ])
+      .then(() => {
+        const formatted = JSON.stringify(manifest, null, 2)
+        callback(null, formatted)
+      })
+      .catch((resolveError) => {
+        callback(resolveError)
+      })
+  } else if (fileExt === ".xml") {
+    const browserconfig = xmljs.xml2js(content)
+
+    const tiles = findElements(browserconfig, "browserconfig")
+      .map((element) => findElements(element, "msapplication"))
+      .reduce((accumulator, value) => [].concat(accumulator).concat(value), [])
+      .map((element) => findElements(element, "tile"))
+      .reduce((accumulator, value) => [].concat(accumulator).concat(value), [])
+      .map((element) => element.elements)
+      .reduce((accumulator, value) => [].concat(accumulator).concat(value), [])
+      .filter((element) => element.attributes && element.attributes.src)
+
+    return resolveImages.call(this, tiles, options).then(() => {
+      const formatted = xmljs.js2xml(browserconfig, {
+        spaces: 2,
+        indentAttributes: false,
+      })
       callback(null, formatted)
-    })
-    .catch((resolveError) => {
+    }).catch((resolveError) => {
+      console.log("ResolveError:",resolveError)
       callback(resolveError)
     })
+  } else {
+    return callback(new Error(`Unsupported manifest file: ${  this.resourcePath}`))
+  }
 }

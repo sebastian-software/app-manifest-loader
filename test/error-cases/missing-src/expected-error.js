@@ -1,1 +1,1 @@
-export default 'Error: Missing image "src" property in Web App Manifest'
+export default 'Error: Missing image "src" property for manifest entry.'
