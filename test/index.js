@@ -16,7 +16,7 @@ describe("Success cases", () => {
       })
 
       test("generates the expected files", async () => {
-        var webpackConfig = require(`./success-cases/${successCase}/webpack.config.js`)
+        var webpackConfig = require(`./success-cases/${successCase}/webpack.config.js`).default
 
         await new Promise((resolve, reject) => {
           webpack(webpackConfig, (webpackError, stats) => {
