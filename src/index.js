@@ -65,13 +65,14 @@ export default function(content, map, meta) {
   const context =
     options.context || this.rootContext || (this.options && this.options.context)
 
+  let manifest
   try {
-    var manifest = JSON.parse(content)
+    manifest = JSON.parse(content)
   } catch (parseError) {
     return callback(new Error("Invalid JSON in Web App Manifest"))
   }
 
-  Promise.all([
+  return Promise.all([
     resolveImages.call(this, manifest.splash_screens, options),
     resolveImages.call(this, manifest.icons, options)
   ])
