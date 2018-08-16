@@ -1,1 +1,1 @@
-require("./manifest.json")
+require("./manifest.webmanifest")

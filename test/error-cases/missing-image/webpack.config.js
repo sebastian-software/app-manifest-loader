@@ -14,7 +14,7 @@ export default {
   module: {
     rules: [
       {
-        test: /manifest.json$/,
+        test: /\.webmanifest$/,
         use: [
           {
             loader: "file-loader"

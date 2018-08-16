@@ -16,7 +16,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /manifest.json$/,
+        test: /\.webmanifest$/,
         type: "javascript/auto",
         use: [
           {
@@ -34,7 +34,7 @@ module.exports = {
         ]
       },
       {
-        test: /.gif$/,
+        test: /\.gif$/,
         use: [
           {
             loader: "file-loader",
