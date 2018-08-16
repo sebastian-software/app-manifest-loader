@@ -75,7 +75,7 @@ export default async function(content, map, meta) {
 
   const fileExt = extname(this.resourcePath)
 
-  if (fileExt === ".json") {
+  if (fileExt === ".json" || fileExt === ".webmanifest") {
     let manifest
     try {
       manifest = JSON.parse(content)

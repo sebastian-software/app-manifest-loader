@@ -15,22 +15,27 @@ describe("Success cases", () => {
         clean(`${__dirname}/success-cases/${successCase}/actual-output`, done)
       })
 
-      test("generates the expected files", () => {
+      test("generates the expected files", async () => {
         var webpackConfig = require(`./success-cases/${successCase}/webpack.config.js`)
 
-        return new Promise((resolve, reject) => {
-          return webpack(webpackConfig, (err, stats) => {
-            if (err) {
-              return reject(err)
+        await new Promise((resolve, reject) => {
+          webpack(webpackConfig, (webpackError, stats) => {
+            var actualError = stats.compilation.errors.join("\n")
+            if (webpackError) {
+              throw new Error(webpackError)
+            }
+            var actualError = stats.compilation.errors.join("\n")
+            if (actualError) {
+              throw new Error(actualError)
             }
 
             var caseDir = `${__dirname}/success-cases/${successCase}`
             var expectedDir = `${caseDir}/expected-output/`
             var actualDir = `${caseDir}/actual-output/`
 
-            directoryContains(expectedDir, actualDir, (err, result) => {
-              if (err) {
-                return reject(err)
+            directoryContains(expectedDir, actualDir, (readError, result) => {
+              if (readError) {
+                throw new Error(readError)
               }
 
               expect(result).toBeTruthy()
@@ -50,14 +55,12 @@ describe("Error cases", () => {
         clean(`${__dirname}/error-cases/${errorCase}/actual-output`, done)
       })
 
-      test("generates the expected error", () => {
-        var webpackConfig = require(`./error-cases/${errorCase}/webpack.config.js`)
-          .default
-        var expectedError = require(`./error-cases/${errorCase}/expected-error.js`)
-          .default
+      test("generates the expected error", async () => {
+        var webpackConfig = require(`./error-cases/${errorCase}/webpack.config.js`).default
+        var expectedError = require(`./error-cases/${errorCase}/expected-error.js`).default
 
-        return new Promise((resolve, reject) => {
-          webpack(webpackConfig, (err, stats) => {
+        await new Promise((resolve, reject) => {
+          webpack(webpackConfig, (webpackError, stats) => {
             var actualError = stats.compilation.errors.join("\n")
 
             expect(actualError.indexOf(expectedError)).not.toBe(-1)
