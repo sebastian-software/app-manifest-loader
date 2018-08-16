@@ -1,23 +1,22 @@
 # Web App Manifest Loader for Webpack<br/>[![Sponsored by][sponsor-img]][sponsor] [![Version][npm-version-img]][npm] [![Downloads][npm-downloads-img]][npm] [![Build Status Unix][travis-img]][travis] [![Build Status Windows][appveyor-img]][appveyor] [![Dependencies][deps-img]][deps]
 
-[sponsor-img]: https://img.shields.io/badge/Sponsored%20by-Sebastian%20Software-692446.svg
 [sponsor]: https://www.sebastian-software.de
 [deps]: https://david-dm.org/sebastian-software/app-manifest-loader
-[deps-img]: https://david-dm.org/sebastian-software/app-manifest-loader.svg
 [npm]: https://www.npmjs.com/package/app-manifest-loader
-[npm-downloads-img]: https://img.shields.io/npm/dm/app-manifest-loader.svg
-[npm-version-img]: https://img.shields.io/npm/v/app-manifest-loader.svg
-[travis-img]: https://img.shields.io/travis/sebastian-software/app-manifest-loader/master.svg?branch=master&label=unix%20build
-[appveyor-img]: https://img.shields.io/appveyor/ci/swernerx/app-manifest-loader/master.svg?label=windows%20build
 [travis]: https://travis-ci.org/sebastian-software/app-manifest-loader
 [appveyor]: https://ci.appveyor.com/project/swernerx/app-manifest-loader/branch/master
 
+[sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/692446
+[deps-img]: https://badgen.net/david/dep/sebastian-software/app-manifest-loader
+[npm-downloads-img]: https://badgen.net/npm/dm/app-manifest-loader
+[npm-version-img]: https://badgen.net/npm/v/app-manifest-loader
+[travis-img]: https://badgen.net/travis/sebastian-software/app-manifest-loader?label=unix%20build
+[appveyor-img]: https://badgen.net/appveyor/ci/swernerx/app-manifest-loader?label=windows%20build
+
 Loader to deal with modern PWA/SPA manifest files:
 
-- [Web Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest):
-- [Browserconfig](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/dn320426\(v=vs.85\))
-
-Load images referenced in the `icons` and `splash_screens` fields in your [Web App Manifest](http://www.w3.org/TR/appmanifest/) using [webpack](https://github.com/webpack/webpack).
+- [Web Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest): Chrome 39+
+- [Browserconfig](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/dn320426\(v=vs.85\)): IE11+, Windows 8+
 
 ```bash
 $ npm install --save-dev app-manifest-loader
@@ -25,11 +24,19 @@ $ npm install --save-dev app-manifest-loader
 
 ## Web App Manifest
 
+Re-References all images declared in the `icons` and `splash_screens` fields.
+
 Here you'll find additional documentation on the corresponding standard:
 
 - [Google Developers](https://developers.google.com/web/fundamentals/web-app-manifest/)
 - [Mozilla](https://developer.mozilla.org/en-US/docs/Web/Manifest)
 - [W3C](http://www.w3.org/TR/appmanifest/)
+
+
+## Browserconfig
+
+Re-References all images find in any of the `tile` configurations.
+
 
 ## Usage
 
@@ -60,16 +67,36 @@ Note that this example also uses [file-loader](https://github.com/webpack-contri
 Then, require the manifest in your application code:
 
 ```js
-import manifest from "./manifest.json"
+import manifest from "./manifest.webmanifest"
+import browserconfig from "./browserconfig.xml"
 ```
 
 In typical React application you might want to use React Helmet. Then the typical approach is to use the imported URL at the corresponding `link` element:
 
 ```html
 <link rel="manifest" href={manifest} />
+<meta name="msapplication-config" content={browserconfig} />
 ```
 
-The manifest allows you to provide image paths in the standard webpack format inside your manifest:
+For ReactJS you typically might want to use it together with [React Helmet Async](https://github.com/staylor/react-helmet-async):
+
+```js
+import Helmet from "react-helmet-async"
+
+import manifest from "./manifest.webmanifest"
+import browserconfig from "./browserconfig.xml"
+
+function renderHead() {
+  return (
+    <Helmet>
+      <link rel="manifest" href={manifest} />
+      <meta name="msapplication-config" content={browserconfig} />
+    </Helmet>
+  )
+}
+```
+
+The manifest allows you to provide image paths in the standard Webpack format inside your manifest:
 
 ```js
 {
@@ -102,7 +129,7 @@ An alternative concept would be to generate most of the required image by automa
 
 - [Webpack PWA Manifest](https://github.com/arthurbergmz/webpack-pwa-manifest)
 
-Compared to the loader based solution this moves application specific data into the Webpack configuration. One could argue that with shared Webpack configurations this introduces some app specific sections in such a tooling related file.
+Compared to the loader based solution this moves application specific data into the Webpack configuration. One could argue that with shared Webpack configurations this introduces some app specific sections in a tooling related file.
 
 
 ## Copyright
