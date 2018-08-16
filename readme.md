@@ -12,6 +12,11 @@
 [travis]: https://travis-ci.org/sebastian-software/app-manifest-loader
 [appveyor]: https://ci.appveyor.com/project/swernerx/app-manifest-loader/branch/master
 
+Loader to deal with modern PWA/SPA manifest files:
+
+- [Web Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest):
+- [Browserconfig](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/dn320426\(v=vs.85\))
+
 Load images referenced in the `icons` and `splash_screens` fields in your [Web App Manifest](http://www.w3.org/TR/appmanifest/) using [webpack](https://github.com/webpack/webpack).
 
 ```bash
@@ -36,7 +41,7 @@ In your Webpack config:
 module: {
   rules: [
     {
-      test: /manifest.json$/,
+      test: /(manifest\.webmanifest|browserconfig\.xml)$/,
       use: [
         {
           loader: "file-loader"
