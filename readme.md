@@ -115,8 +115,8 @@ The manifest allows you to provide image paths in the standard Webpack format in
   ],
   "icons": [
     {
-      "src": "./images/screenshot-landscape.png",
-      "sizes": "1440x2560",
+      "src": "./images/icon.png",
+      "sizes": "192x192",
       "type": "image/png"
     },
     ...
