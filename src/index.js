@@ -85,7 +85,7 @@ export default async function(content, map, meta) {
 
     try {
       await Promise.all([
-        resolveImages.call(this, manifest.splash_screens, options),
+        resolveImages.call(this, manifest.screenshots, options),
         resolveImages.call(this, manifest.icons, options)
       ])
     } catch(resolveError) {
