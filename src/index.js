@@ -1,3 +1,4 @@
+/* eslint-disable complexity, max-statements, no-new-func */
 import { extname } from "path"
 import loaderUtils from "loader-utils"
 import xmljs from "xml-js"
