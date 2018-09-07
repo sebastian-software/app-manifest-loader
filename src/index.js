@@ -5,7 +5,7 @@ import xmljs from "xml-js"
 
 const PUBLIC_MARKER = "__webpack_public_path__"
 
-function resolveImageSrc(image, options) {
+function resolveImageSrc(image, options, publicPath) {
   const hasAttributes = Boolean(image.attributes)
   const src = hasAttributes ? image.attributes.src : image.src
   if (typeof src !== "string") {
@@ -54,12 +54,12 @@ function resolveImageSrc(image, options) {
   })
 }
 
-function resolveImages(entries, options) {
+function resolveImages(entries, options, publicPath) {
   if (!Array.isArray(entries)) {
     return Promise.resolve()
   }
 
-  return Promise.all(entries.map((entry) => resolveImageSrc.call(this, entry, options)))
+  return Promise.all(entries.map((entry) => resolveImageSrc.call(this, entry, options, publicPath)))
 }
 
 function findElements(xmlElement, expectedName) {
@@ -72,6 +72,13 @@ export default async function(content, map, meta) {
   }
 
   const options = loaderUtils.getOptions(this) || {}
+  const context = options.context || this.rootContext || (this.options && this.options.context)
+
+  let publicPath = options.publicPath || this._compiler.options.output.publicPath || ""
+  if (typeof publicPath === "string" && publicPath.length !== 0 && !publicPath.endsWith("/")) {
+    publicPath += "/"
+  }
+
   const callback = this.async()
 
   const fileExt = extname(this.resourcePath)
@@ -86,8 +93,8 @@ export default async function(content, map, meta) {
 
     try {
       await Promise.all([
-        resolveImages.call(this, manifest.screenshots, options),
-        resolveImages.call(this, manifest.icons, options)
+        resolveImages.call(this, manifest.screenshots, options, publicPath),
+        resolveImages.call(this, manifest.icons, options, publicPath)
       ])
     } catch(resolveError) {
       return callback(resolveError)
@@ -113,7 +120,7 @@ export default async function(content, map, meta) {
       .filter((element) => element.attributes && element.attributes.src)
 
     try {
-      await resolveImages.call(this, tiles, options)
+      await resolveImages.call(this, tiles, options, publicPath)
     } catch(resolveError) {
       return callback(resolveError)
     }
