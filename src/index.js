@@ -32,6 +32,13 @@ function resolveImageSrc(image, options, publicPath) {
         const publicPath = options.publicPath ?
           loaderUtils.interpolateName(this, options.publicPath, { content: source }) :
           ""
+        if (typeof publicPath === "function") {
+          publicPath = publicPath(url)
+          if (publicPath && publicPath.endsWith("/")) {
+            publicPath += "/"
+          }
+        }
+
         const assignmentWithPublicPath = source.replace(
           PUBLIC_MARKER,
           JSON.stringify(publicPath)
