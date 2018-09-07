@@ -25,10 +25,7 @@ export default {
             }
           },
           {
-            loader: "../../../",
-            options: {
-              publicPath: "http://cdn.example.com/assets/"
-            }
+            loader: "../../../"
           }
         ]
       },

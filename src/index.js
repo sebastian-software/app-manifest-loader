@@ -29,9 +29,12 @@ function resolveImageSrc(image, options, publicPath) {
           return reject(error)
         }
 
-        const publicPath = options.publicPath ?
-          loaderUtils.interpolateName(this, options.publicPath, { content: source }) :
-          ""
+        const url = loaderUtils.interpolateName(this, source, {
+          context,
+          content: source,
+          regExp: options.regExp
+        })
+
         if (typeof publicPath === "function") {
           publicPath = publicPath(url)
           if (publicPath && publicPath.endsWith("/")) {
@@ -44,7 +47,6 @@ function resolveImageSrc(image, options, publicPath) {
           JSON.stringify(publicPath)
         )
 
-        /* eslint-disable no-new-func */
         const getPublicSource = new Function(
           `var module={};return ${assignmentWithPublicPath}`
         )
@@ -140,4 +142,6 @@ export default async function(content, map, meta) {
   } else {
     callback(new Error(`Unsupported manifest file: ${this.resourcePath}`))
   }
+
+  return null
 }
