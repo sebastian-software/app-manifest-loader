@@ -23,7 +23,7 @@
     "url": "https://www.sebastian-software.de"
   },
   "engines": {
-    "node": ">=6.0.0",
+    "node": ">=8.0.0",
     "yarn": ">=1.0.0",
     "npm": ">=4.0.0"
   },
