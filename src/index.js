@@ -68,7 +68,9 @@ function resolveImages(entries, options, publicPath) {
     return Promise.resolve()
   }
 
-  return Promise.all(entries.map((entry) => resolveImageSrc.call(this, entry, options, publicPath)))
+  return Promise.all(
+    entries.map((entry) => resolveImageSrc.call(this, entry, options, publicPath))
+  )
 }
 
 function findElements(xmlElement, expectedName) {
@@ -81,10 +83,15 @@ export default async function(content, map, meta) {
   }
 
   const options = loaderUtils.getOptions(this) || {}
-  const context = options.context || this.rootContext || (this.options && this.options.context)
+  const context =
+    options.context || this.rootContext || (this.options && this.options.context)
 
   let publicPath = options.publicPath || this._compiler.options.output.publicPath || ""
-  if (typeof publicPath === "string" && publicPath.length !== 0 && !publicPath.endsWith("/")) {
+  if (
+    typeof publicPath === "string" &&
+    publicPath.length !== 0 &&
+    !publicPath.endsWith("/")
+  ) {
     publicPath += "/"
   }
 
@@ -105,7 +112,7 @@ export default async function(content, map, meta) {
         resolveImages.call(this, manifest.screenshots, options, publicPath),
         resolveImages.call(this, manifest.icons, options, publicPath)
       ])
-    } catch(resolveError) {
+    } catch (resolveError) {
       return callback(resolveError)
     }
 
@@ -130,7 +137,7 @@ export default async function(content, map, meta) {
 
     try {
       await resolveImages.call(this, tiles, options, publicPath)
-    } catch(resolveError) {
+    } catch (resolveError) {
       return callback(resolveError)
     }
 

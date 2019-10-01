@@ -7,6 +7,9 @@
     "lib/"
   ],
   "scripts": {
+    "lint": "eslint '**/*.{js,jsx}'",
+    "fix": "eslint --fix '**/*.{js,jsx}'",
+    "format": "prettier --write '**/*.{js,jsx,json,md}' && npm run fix",
     "prepack": "rimraf lib && preppy",
     "test": "npm run prepack && jest",
     "release": "git push && release-it --github.release --npm.publish --non-interactive",

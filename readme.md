@@ -5,7 +5,6 @@
 [npm]: https://www.npmjs.com/package/app-manifest-loader
 [travis]: https://travis-ci.org/sebastian-software/app-manifest-loader
 [appveyor]: https://ci.appveyor.com/project/swernerx/app-manifest-loader/branch/master
-
 [sponsor-img]: https://badgen.net/badge/Sponsored%20by/Sebastian%20Software/692446
 [deps-img]: https://badgen.net/david/dep/sebastian-software/app-manifest-loader
 [npm-downloads-img]: https://badgen.net/npm/dm/app-manifest-loader
@@ -16,10 +15,9 @@
 Loader to deal with modern PWA/SPA manifest files:
 
 - [Web Manifest](https://developer.mozilla.org/en-US/docs/Web/Manifest): Chrome 39+
-- [Browserconfig](https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/dn320426\(v=vs.85\)): IE11+, Windows 8+
+- [Browserconfig](<https://docs.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/platform-apis/dn320426(v=vs.85)>): IE11+, Windows 8+
 
 Easy to use. Two formats, one loader. Ready for Webpack v4. Enjoy.
-
 
 ```bash
 $ npm install --save-dev app-manifest-loader
@@ -35,11 +33,9 @@ Here you'll find additional documentation on the corresponding standard:
 - [Mozilla](https://developer.mozilla.org/en-US/docs/Web/Manifest)
 - [W3C](http://www.w3.org/TR/appmanifest/)
 
-
 ## Browserconfig
 
 Re-References all images find in any of the `tile` configurations.
-
 
 ## Usage
 
@@ -77,8 +73,8 @@ import browserconfig from "./browserconfig.xml"
 In typical React application you might want to use React Helmet. Then the typical approach is to use the imported URL at the corresponding `link` element:
 
 ```html
-<link rel="manifest" href={manifest} />
-<meta name="msapplication-config" content={browserconfig} />
+<link rel="manifest" href="{manifest}" />
+<meta name="msapplication-config" content="{browserconfig}" />
 ```
 
 For ReactJS you typically might want to use it together with [React Helmet Async](https://github.com/staylor/react-helmet-async):
@@ -133,7 +129,6 @@ An alternative concept would be to generate most of the required image by automa
 - [Webpack PWA Manifest](https://github.com/arthurbergmz/webpack-pwa-manifest)
 
 Compared to the loader based solution this moves application specific data into the Webpack configuration. One could argue that with shared Webpack configurations this introduces some app specific sections in a tooling related file.
-
 
 ## Copyright
 

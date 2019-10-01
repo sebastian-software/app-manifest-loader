@@ -1,7 +1,7 @@
-import glob from "glob"
-import steed from "steed"
 import fs from "fs"
 import path from "path"
+import glob from "glob"
+import steed from "steed"
 
 const readFile = (path, done) => fs.readFile(path, "utf8", done)
 

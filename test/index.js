@@ -16,7 +16,8 @@ describe("Success cases", () => {
       })
 
       test("generates the expected files", async () => {
-        var webpackConfig = require(`./success-cases/${successCase}/webpack.config.js`).default
+        var webpackConfig = require(`./success-cases/${successCase}/webpack.config.js`)
+          .default
 
         await new Promise((resolve, reject) => {
           webpack(webpackConfig, (webpackError, stats) => {
@@ -56,8 +57,10 @@ describe("Error cases", () => {
       })
 
       test("generates the expected error", async () => {
-        var webpackConfig = require(`./error-cases/${errorCase}/webpack.config.js`).default
-        var expectedError = require(`./error-cases/${errorCase}/expected-error.js`).default
+        var webpackConfig = require(`./error-cases/${errorCase}/webpack.config.js`)
+          .default
+        var expectedError = require(`./error-cases/${errorCase}/expected-error.js`)
+          .default
 
         await new Promise((resolve, reject) => {
           webpack(webpackConfig, (webpackError, stats) => {
