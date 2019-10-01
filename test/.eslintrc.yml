@@ -1,0 +1,3 @@
+rules:
+  import/no-commonjs: off
+  filenames/match-regex: off
